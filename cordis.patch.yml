@@ -1,0 +1,29 @@
+# DSH ↔ GPT-SoVITS 桥
+# 只插入宿主半边（Node 侧）。没有 client 注入：本插件只提供 HTTP 接口，
+# 由其它朗读插件 / 视频工程 / curl 来调，不改 DSH 界面。
+#
+# 配置说明（改完重启 DSH 生效）：
+#   port: 0          # 0 = 自动探测（9880 → 9872 → 9874 → extraPorts）；当前 9880 已起 api_v2，可直接填 9880
+#   dialect: auto    # auto / api / api_v2；用 openapi.json 路由表自动识别
+#   extraPorts: []   # 额外要探的端口，例如 [9900]
+#   host: 127.0.0.1
+#   referWavPath: '' # 参考音频绝对路径；留空则请求时必须自带
+#   promptText: ''   # 参考音频对应文本
+#   promptLanguage: zh
+#   textLanguage: zh
+#   timeoutMs: 120000  # M1 CPU 推理慢，别设太短
+#   outDir: ''       # wav 落地目录，留空用 ~/.dsh/gsv-bridge-out
+- insert:
+    - id: gsv-bridge
+      name: 'dsh-gsv-bridge'
+      config:
+        host: 127.0.0.1
+        port: 0
+        dialect: auto
+        extraPorts: []
+        referWavPath: '/Users/moalcaswes/GPT-SoVITS/logs/xxx/5-wav32k/正太音.mp3_0000014720_0000239040.wav'
+        promptText: '我被抓了三次,三次都是同一件事,我把没经历过的事,说成了自己的经历.'
+        promptLanguage: zh
+        textLanguage: zh
+        timeoutMs: 120000
+        outDir: ''
